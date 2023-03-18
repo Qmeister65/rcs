@@ -1,9 +1,16 @@
-import React from 'react'
+import React from 'react';
+import data from './assets/data.json';
+import CardsList from './components/cardsList';
+import './main.scss';
 
-function App() {
+class App extends React.Component<Record<string, never>, Record<string, never>> {
+  render() {
     return (
-        <div className="App"></div>
-    )
+      <div className={'app'}>
+        <CardsList data={data} />
+      </div>
+    );
+  }
 }
 
-export default App
+export default App;
