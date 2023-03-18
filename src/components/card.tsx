@@ -6,7 +6,11 @@ class Card extends React.Component<CardProps, Record<string, never>> {
   render() {
     return (
       <div className="card">
-        <img src={`./src/assets/toys/${this.props.num}.png`} className="card__img" alt={this.props.num}></img>
+        <img
+          src={`./src/assets/toys/${this.props.num}.png`}
+          className="card__img"
+          alt={this.props.num}
+        ></img>
         <div className="card-properties">
           <h3 className="card__name">{this.props.name}</h3>
           <p className="card-properties__property">Количество: {this.props.count}</p>

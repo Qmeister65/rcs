@@ -1,0 +1,32 @@
+.search-bar {
+  display: flex;
+  gap: 10px;
+  width: 60%;
+
+  &__icon {
+    background-color: #e1f5f2;
+    padding: 10px;
+    border-radius: 10px;
+    width: 50px;
+    height: 50px;
+    background-image: url("../assets/search-icon.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+  }
+
+  &__input {
+    color: #5a5d9d;
+    width: 80%;
+    display: block;
+    padding: 10px;
+    font-size: 20px;
+    border: 3px solid #e1f5f2;
+    border-radius: 10px;
+  }
+
+  &__input:focus-visible {
+    border: 3px solid #6bc5d2;
+    outline: none;
+  }
+}
