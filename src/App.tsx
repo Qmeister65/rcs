@@ -1,15 +1,14 @@
 import React from 'react';
-import data from './assets/data.json';
-import CardsList from './components/cardsList';
 import './main.scss';
-import SearchBar from './components/searchBar';
+import { Outlet } from 'react-router-dom';
+import Header from './components/header';
 
-class App extends React.Component<Record<string, never>, Record<string, never>> {
+class App extends React.Component {
   render() {
     return (
-      <div className={'app'}>
-        <SearchBar />
-        <CardsList data={data} />
+      <div>
+        <Header />
+        <Outlet />
       </div>
     );
   }

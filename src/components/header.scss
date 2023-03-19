@@ -1,0 +1,25 @@
+.header {
+  background-color: #e1f5f2;
+  align-self: center;
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+  font-size: 16px;
+  color: #6bc5d2;
+  margin: 20px;
+  border-radius: 10px;
+}
+
+a {
+  color: #5a5d9d;
+  align-self: center;
+  padding: 5px;
+  background-color: #e1f5f2;
+}
+
+.active {
+  color: #390050;
+  font-size: 20px;
+  cursor: default;
+}
+
