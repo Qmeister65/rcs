@@ -1,13 +1,13 @@
 import React from 'react';
 import './card.scss';
-import { CardProps } from '../types';
+import { CardProps } from '@/types';
 
 class Card extends React.Component<CardProps, Record<string, never>> {
   render() {
     return (
       <div className="card">
         <img
-          src={`./src/assets/toys/${this.props.num}.png`}
+          src={this.props.src ? this.props.src : `./src/assets/toys/${this.props.num}.png`}
           className="card__img"
           alt={this.props.num}
         ></img>
