@@ -50,10 +50,10 @@ class FormsPage extends React.Component<Record<string, never>, FormPageState> {
         {
           num: uuid(),
           src: file ? URL.createObjectURL(file) : undefined,
-          name: this.name.current?.value || 'Unknown',
-          count: this.count.current?.value.toString() || '0',
-          year: this.date.current?.value.toString() || Date.now().toString(),
-          shape: this.shape.current?.value || 'das',
+          name: this.name.current?.value || '',
+          count: this.count.current?.value || '',
+          year: this.date.current?.value.slice(0, 4) || '',
+          shape: this.shape.current?.value || '',
           color: this.colors
             .filter((el) => el.ref.current?.checked)
             .map((el) => el.value)
