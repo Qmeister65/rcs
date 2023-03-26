@@ -3,10 +3,13 @@ import CardsForm from '@/components/cardsForm';
 import CardsList from '@/components/cardsList';
 import { FormPageState } from '@/types';
 import { v4 as uuid } from 'uuid';
+import Popup from '@/components/popup';
+import ConfirmationMessage from '@/components/confirmationMessage';
 
 class FormsPage extends React.Component<Record<string, never>, FormPageState> {
   state: FormPageState = {
     cardList: [],
+    isPopupShown: false,
   };
   name = React.createRef<HTMLInputElement>();
   date = React.createRef<HTMLInputElement>();
@@ -39,6 +42,7 @@ class FormsPage extends React.Component<Record<string, never>, FormPageState> {
 
   addCard = () => {
     const file = this.img.current?.files ? this.img.current.files[0] : null;
+    this.invertPopup(true);
     this.setState({
       cardList: [
         ...this.state.cardList,
@@ -59,6 +63,10 @@ class FormsPage extends React.Component<Record<string, never>, FormPageState> {
     });
   };
 
+  hidePopup = () => this.invertPopup(false);
+
+  invertPopup = (isPopupShown: boolean): void => this.setState({ isPopupShown: isPopupShown });
+
   render() {
     return (
       <div>
@@ -73,6 +81,11 @@ class FormsPage extends React.Component<Record<string, never>, FormPageState> {
           sizesRefs={this.sizes}
           imageRef={this.img}
         />
+        {this.state.isPopupShown && (
+          <Popup>
+            <ConfirmationMessage onClick={this.hidePopup} />
+          </Popup>
+        )}
         <CardsList data={this.state.cardList} />
       </div>
     );

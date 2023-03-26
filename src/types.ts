@@ -28,6 +28,7 @@ export interface FormState {
 
 export interface FormPageState {
   cardList: CardProps[];
+  isPopupShown: boolean;
 }
 
 export interface ValuesIdsRefs {
@@ -59,3 +60,11 @@ export interface ValidationError {
 }
 
 export type Validation = () => ValidationError | undefined;
+
+export interface ConfirmationMessageProps {
+  onClick: () => void;
+}
+
+export interface PopupProps {
+  children: React.ReactNode | JSX.Element;
+}
