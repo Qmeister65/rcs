@@ -11,6 +11,7 @@ class FormsPage extends React.Component<Record<string, never>, FormPageState> {
     cardList: [],
     isPopupShown: false,
   };
+  formRef = React.createRef<HTMLFormElement>();
   name = React.createRef<HTMLInputElement>();
   date = React.createRef<HTMLInputElement>();
   count = React.createRef<HTMLInputElement>();
@@ -61,6 +62,7 @@ class FormsPage extends React.Component<Record<string, never>, FormPageState> {
         },
       ],
     });
+    this.formRef.current?.reset();
   };
 
   hidePopup = () => this.invertPopup(false);
@@ -71,6 +73,7 @@ class FormsPage extends React.Component<Record<string, never>, FormPageState> {
     return (
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <CardsForm
+          formRef={this.formRef}
           addCard={this.addCard}
           nameRef={this.name}
           countRef={this.count}

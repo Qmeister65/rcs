@@ -88,6 +88,7 @@ class CardsForm extends React.Component<FormProps, FormState> {
           onError={this.onError}
           onSubmit={this.handleSubmit}
           validation={this.errorsArr}
+          formRef={this.props.formRef}
         >
           <InputField
             id="name"

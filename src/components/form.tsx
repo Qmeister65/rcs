@@ -3,6 +3,7 @@ import { Validation, ValidationError } from '@/types';
 
 interface FormProps {
   className: string;
+  formRef: React.RefObject<HTMLFormElement>;
   children: React.ReactNode | JSX.Element;
   onSubmit: () => void;
   onError: (errors: ValidationError[]) => void;
@@ -25,7 +26,7 @@ class Form extends React.Component<FormProps> {
 
   render() {
     return (
-      <form className={this.props.className} onSubmit={this.onSubmit}>
+      <form className={this.props.className} onSubmit={this.onSubmit} ref={this.props.formRef}>
         {this.props.children}
       </form>
     );

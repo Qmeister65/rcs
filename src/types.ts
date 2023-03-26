@@ -45,6 +45,7 @@ export interface ValuesIds {
 
 export interface FormProps {
   addCard: () => void;
+  formRef: React.RefObject<HTMLFormElement>;
   nameRef: React.RefObject<HTMLInputElement>;
   countRef: React.RefObject<HTMLInputElement>;
   dateRef: React.RefObject<HTMLInputElement>;
