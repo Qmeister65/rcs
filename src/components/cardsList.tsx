@@ -1,7 +1,7 @@
 import React from 'react';
-import Card from './card';
+import Card from '@/components/card';
 import './cardsList.scss';
-import { CardListProps } from '../types';
+import { CardListProps } from '@/types';
 
 class CardsList extends React.Component<CardListProps, Record<string, never>> {
   render() {

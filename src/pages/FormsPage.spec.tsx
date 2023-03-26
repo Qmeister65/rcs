@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import React from 'react';
-import FormsPage from './FormsPage';
+import FormsPage from '@/pages/FormsPage';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 describe('Forms page', () => {

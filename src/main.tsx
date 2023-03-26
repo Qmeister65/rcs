@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import App from '@/App';
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
-import MainPage from './pages/MainPage';
-import AboutPage from './pages/AboutPage';
-import NotFoundPage from './pages/NotFoundPage';
-import FormsPage from './pages/FormsPage';
+import MainPage from '@/pages/MainPage';
+import AboutPage from '@/pages/AboutPage';
+import NotFoundPage from '@/pages/NotFoundPage';
+import FormsPage from '@/pages/FormsPage';
 
 const router = createBrowserRouter([
   {

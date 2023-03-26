@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import React from 'react';
-import NotFoundPage from './NotFoundPage';
+import NotFoundPage from '@/pages/NotFoundPage';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 

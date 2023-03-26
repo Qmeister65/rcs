@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import React from 'react';
-import MainPage from './MainPage';
+import MainPage from '@/pages/MainPage';
 import { render, screen } from '@testing-library/react';
 
 describe('Main page', () => {

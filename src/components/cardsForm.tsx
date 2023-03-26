@@ -1,7 +1,7 @@
 import React from 'react';
-import { FormProps, FormState, Validation, ValidationError } from '../types';
-import InputField from '../components/inputField';
-import Form from '../components/form';
+import { FormProps, FormState, Validation, ValidationError } from '@/types';
+import InputField from '@/components/inputField';
+import Form from '@/components/form';
 
 class CardsForm extends React.Component<FormProps, FormState> {
   state: FormState = {
