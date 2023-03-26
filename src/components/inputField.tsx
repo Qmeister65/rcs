@@ -14,6 +14,7 @@ class InputField extends React.Component<InputFieldProps> {
             value={this.props.value}
             name={this.props.id}
             className={this.props.inputStyle}
+            accept={this.props.accept}
           />
           {this.props.label}
         </label>

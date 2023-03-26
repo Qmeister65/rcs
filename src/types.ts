@@ -21,6 +21,7 @@ export interface InputFieldProps {
   error?: string;
   refProp?: React.RefObject<HTMLInputElement>;
   inputStyle?: string;
+  accept?: string;
 }
 
 export interface FormState {

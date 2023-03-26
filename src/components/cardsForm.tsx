@@ -171,6 +171,7 @@ class CardsForm extends React.Component<FormProps, FormState> {
             type="file"
             refProp={this.props.imageRef}
             error={this.findError('image')}
+            accept="image/*"
           />
           <InputField id="submit" type="submit" value="Submit" inputStyle="cardsForm__btn" />
         </Form>
