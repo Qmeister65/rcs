@@ -69,7 +69,7 @@ class FormsPage extends React.Component<Record<string, never>, FormPageState> {
 
   render() {
     return (
-      <div>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
         <CardsForm
           addCard={this.addCard}
           nameRef={this.name}

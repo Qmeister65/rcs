@@ -2,6 +2,7 @@ import React from 'react';
 import { Validation, ValidationError } from '@/types';
 
 interface FormProps {
+  className: string;
   children: React.ReactNode | JSX.Element;
   onSubmit: () => void;
   onError: (errors: ValidationError[]) => void;
@@ -23,7 +24,11 @@ class Form extends React.Component<FormProps> {
   };
 
   render() {
-    return <form onSubmit={this.onSubmit}>{this.props.children}</form>;
+    return (
+      <form className={this.props.className} onSubmit={this.onSubmit}>
+        {this.props.children}
+      </form>
+    );
   }
 }
 

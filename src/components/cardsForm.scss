@@ -1,0 +1,45 @@
+.cardsForm {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+  margin: 20px auto;
+  background: #e1f5f2;
+  border-radius: 10px;
+  width: 340px;
+  gap: 10px;
+  color: #5a5d9d;
+
+  &-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+
+    &__multiple {
+      display: flex;
+      gap: 5px;
+      flex-direction: column;
+    }
+  }
+
+  &__error {
+    color: #8b0000;
+  }
+
+  &__btn {
+    margin: 0 auto;
+    border-radius: 100px;
+    cursor: pointer;
+    padding: 5px 20px;
+    background: white;
+    color: #390050;
+    border: 2px solid #5a5d9d;
+
+    &:hover {
+      background: #6bc5d2;
+    }
+  }
+}

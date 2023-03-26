@@ -20,6 +20,7 @@ export interface InputFieldProps {
   label?: string;
   error?: string;
   refProp?: React.RefObject<HTMLInputElement>;
+  inputStyle?: string;
 }
 
 export interface FormState {

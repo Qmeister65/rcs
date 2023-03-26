@@ -2,6 +2,7 @@ import React from 'react';
 import { FormProps, FormState, Validation, ValidationError } from '@/types';
 import InputField from '@/components/inputField';
 import Form from '@/components/form';
+import './cardsForm.scss';
 
 class CardsForm extends React.Component<FormProps, FormState> {
   state: FormState = {
@@ -81,8 +82,13 @@ class CardsForm extends React.Component<FormProps, FormState> {
 
   render() {
     return (
-      <div>
-        <Form onError={this.onError} onSubmit={this.handleSubmit} validation={this.errorsArr}>
+      <>
+        <Form
+          className="cardsForm"
+          onError={this.onError}
+          onSubmit={this.handleSubmit}
+          validation={this.errorsArr}
+        >
           <InputField
             id="name"
             label="Название"
@@ -104,7 +110,7 @@ class CardsForm extends React.Component<FormProps, FormState> {
             refProp={this.props.dateRef}
             error={this.findError('date')}
           />
-          <label htmlFor="shape">
+          <label className="cardsForm-field" htmlFor="shape">
             <select id="shape" ref={this.props.shapeRef} defaultValue="">
               {this.props.shapes.map((el) => (
                 <option
@@ -118,36 +124,46 @@ class CardsForm extends React.Component<FormProps, FormState> {
               ))}
             </select>
             Форма
-            {this.findError('shape') && <span>{this.findError('shape')}</span>}
           </label>
-          <label>
-            {this.props.colorsRefs.map((el) => (
-              <InputField
-                key={el.id}
-                id={'color' + el.id}
-                label={el.value}
-                type="checkbox"
-                value={el.value}
-                refProp={el.ref}
-              />
-            ))}
+          {this.findError('shape') && (
+            <span className="cardsForm__error">{this.findError('shape')}</span>
+          )}
+          <label className="cardsForm-field">
+            <div className="cardsForm-field__multiple">
+              {this.props.colorsRefs.map((el) => (
+                <InputField
+                  key={el.id}
+                  id={'color' + el.id}
+                  label={el.value}
+                  type="checkbox"
+                  value={el.value}
+                  refProp={el.ref}
+                />
+              ))}
+            </div>
             Цвет
-            {this.findError('color') && <span>{this.findError('color')}</span>}
           </label>
-          <label>
-            {this.props.sizesRefs.map((el) => (
-              <InputField
-                key={el.id}
-                id={'radioGroup'}
-                label={el.value}
-                type="radio"
-                value={el.value}
-                refProp={el.ref}
-              />
-            ))}
+          {this.findError('color') && (
+            <span className="cardsForm__error">{this.findError('color')}</span>
+          )}
+          <label className="cardsForm-field">
+            <div className="cardsForm-field__multiple">
+              {this.props.sizesRefs.map((el) => (
+                <InputField
+                  key={el.id}
+                  id={'radioGroup'}
+                  label={el.value}
+                  type="radio"
+                  value={el.value}
+                  refProp={el.ref}
+                />
+              ))}
+            </div>
             Размер
-            {this.findError('size') && <span>{this.findError('size')}</span>}
           </label>
+          {this.findError('size') && (
+            <span className="cardsForm__error">{this.findError('size')}</span>
+          )}
           <InputField
             id="img"
             label="Картинка для игрушки"
@@ -155,9 +171,9 @@ class CardsForm extends React.Component<FormProps, FormState> {
             refProp={this.props.imageRef}
             error={this.findError('image')}
           />
-          <InputField id="submit" type="submit" value="Submit" />
+          <InputField id="submit" type="submit" value="Submit" inputStyle="cardsForm__btn" />
         </Form>
-      </div>
+      </>
     );
   }
 }
