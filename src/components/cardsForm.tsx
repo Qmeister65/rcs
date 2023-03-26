@@ -11,18 +11,33 @@ class CardsForm extends React.Component<FormProps, FormState> {
   errorsArr: Validation[] = [
     () => {
       return !!this.props.nameRef.current?.value
-        ? undefined
+        ? this.props.nameRef.current.value.length < 18
+          ? undefined
+          : {
+              id: 'name',
+              message: 'Name length should not be longer than 18 symbols',
+            }
         : {
             id: 'name',
-            message: 'Error',
+            message: 'Name should not be empty',
           };
     },
     () => {
       return !!this.props.countRef.current?.value
-        ? undefined
+        ? +this.props.countRef.current.value > 0
+          ? undefined
+          : +this.props.countRef.current.value === 0
+          ? {
+              id: 'count',
+              message: 'Quantity should not be zero',
+            }
+          : {
+              id: 'count',
+              message: 'Quantity should not be negative',
+            }
         : {
             id: 'count',
-            message: 'Error',
+            message: 'Quantity should not be empty',
           };
     },
     () => {
@@ -30,7 +45,7 @@ class CardsForm extends React.Component<FormProps, FormState> {
         ? undefined
         : {
             id: 'date',
-            message: 'Error',
+            message: 'Date should be selected',
           };
     },
     () => {
@@ -38,7 +53,7 @@ class CardsForm extends React.Component<FormProps, FormState> {
         ? undefined
         : {
             id: 'shape',
-            message: 'Error',
+            message: 'Shape should be selected',
           };
     },
     () => {
@@ -46,7 +61,7 @@ class CardsForm extends React.Component<FormProps, FormState> {
         ? undefined
         : {
             id: 'color',
-            message: 'Error',
+            message: 'At least one color should be checked',
           };
     },
     () => {
@@ -54,7 +69,7 @@ class CardsForm extends React.Component<FormProps, FormState> {
         ? undefined
         : {
             id: 'size',
-            message: 'Error',
+            message: 'Size should be selected',
           };
     },
     () => {
@@ -62,7 +77,7 @@ class CardsForm extends React.Component<FormProps, FormState> {
         ? undefined
         : {
             id: 'image',
-            message: 'Error',
+            message: 'Image should be uploaded',
           };
     },
   ];
