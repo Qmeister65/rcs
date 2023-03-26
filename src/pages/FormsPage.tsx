@@ -1,7 +1,7 @@
 import React from 'react';
-import CardsForm from '@/components/cardsForm';
-import CardsList from '@/components/cardsList';
-import { FormPageState } from '@/types';
+import CardsForm from '../components/cardsForm';
+import CardsList from '../components/cardsList';
+import { FormPageState } from '../types';
 import { v4 as uuid } from 'uuid';
 
 class FormsPage extends React.Component<Record<string, never>, FormPageState> {
