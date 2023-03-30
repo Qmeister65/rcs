@@ -7,6 +7,7 @@ class Header extends React.Component {
     return (
       <div className={'header'}>
         <NavLink to={'/'}>Main</NavLink>
+        <NavLink to={'/forms'}>Forms</NavLink>
         <NavLink to={'/about'}>About</NavLink>
       </div>
     );
