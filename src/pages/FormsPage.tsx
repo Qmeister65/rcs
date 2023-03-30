@@ -1,98 +1,89 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import CardsForm from '@/components/cardsForm';
-import CardsList from '@/components/cardsList';
-import { FormPageState } from '@/types';
-import { v4 as uuid } from 'uuid';
 import Popup from '@/components/popup';
 import ConfirmationMessage from '@/components/confirmationMessage';
+import CardsList from '@/components/cardsList';
+import { v4 as uuid } from 'uuid';
+import { CardProps } from '@/types';
 
-class FormsPage extends React.Component<Record<string, never>, FormPageState> {
-  state: FormPageState = {
-    cardList: [],
-    isPopupShown: false,
-  };
-  formRef = React.createRef<HTMLFormElement>();
-  name = React.createRef<HTMLInputElement>();
-  date = React.createRef<HTMLInputElement>();
-  count = React.createRef<HTMLInputElement>();
-  shape = React.createRef<HTMLSelectElement>();
-  colorValues: string[] = ['белый', 'зеленый', 'красный', 'желтый', 'синий'];
-  shapeValues: string[] = ['', 'шар', 'фигурка', 'колокольчик', 'шишка'];
-  sizeValues: string[] = ['малый', 'средний', 'большой'];
-  colors = this.colorValues.map((el) => {
+const FormsPage: React.FC = () => {
+  const colorValues: string[] = ['белый', 'зеленый', 'красный', 'желтый', 'синий'];
+  const shapeValues: string[] = ['', 'шар', 'фигурка', 'колокольчик', 'шишка'];
+  const sizeValues: string[] = ['малый', 'средний', 'большой'];
+  const formRef = useRef<HTMLFormElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const countRef = useRef<HTMLInputElement>(null);
+  const dateRef = useRef<HTMLInputElement>(null);
+  const shapeRef = useRef<HTMLSelectElement>(null);
+  const imageRef = useRef<HTMLInputElement>(null);
+  const colorsRefs = colorValues.map((el) => {
     return {
       id: uuid(),
       value: el,
       ref: React.createRef<HTMLInputElement>(),
     };
   });
-  sizes = this.sizeValues.map((el) => {
+  const sizesRefs = sizeValues.map((el) => {
     return {
       id: uuid(),
       value: el,
       ref: React.createRef<HTMLInputElement>(),
     };
   });
-  shapes = this.shapeValues.map((el) => {
+  const shapes = shapeValues.map((el) => {
     return {
       id: uuid(),
       value: el,
     };
   });
-  img = React.createRef<HTMLInputElement>();
-
-  addCard = () => {
-    const file = this.img.current?.files ? this.img.current.files[0] : null;
-    this.invertPopup(true);
-    this.setState({
-      cardList: [
-        ...this.state.cardList,
-        {
-          num: uuid(),
-          src: file ? URL.createObjectURL(file) : undefined,
-          name: this.name.current?.value || '',
-          count: this.count.current?.value || '',
-          year: this.date.current?.value.slice(0, 4) || '',
-          shape: this.shape.current?.value || '',
-          color: this.colors
-            .filter((el) => el.ref.current?.checked)
-            .map((el) => el.value)
-            .join(', '),
-          size: this.sizes.filter((el) => el.ref.current?.checked === true)[0].value,
-        },
-      ],
-    });
-    this.formRef.current?.reset();
+  const [cardList, setCardList] = useState<CardProps[]>([]);
+  const [isPopupShown, setIsPopupShown] = useState(false);
+  const addCard = () => {
+    const file = imageRef.current?.files ? imageRef.current.files[0] : null;
+    invertPopup(true);
+    setCardList([
+      ...cardList,
+      {
+        num: uuid(),
+        src: file ? URL.createObjectURL(file) : undefined,
+        name: nameRef.current?.value || '',
+        count: countRef.current?.value || '',
+        year: dateRef.current?.value.slice(0, 4) || '',
+        shape: shapeRef.current?.value || '',
+        color: colorsRefs
+          .filter((el) => el.ref.current?.checked)
+          .map((el) => el.value)
+          .join(', '),
+        size: sizesRefs.filter((el) => el.ref.current?.checked === true)[0].value,
+      },
+    ]);
+    formRef.current?.reset();
   };
+  const invertPopup = (isPopupShown: boolean): void => setIsPopupShown(isPopupShown);
+  const hidePopup = () => invertPopup(false);
 
-  hidePopup = () => this.invertPopup(false);
-
-  invertPopup = (isPopupShown: boolean): void => this.setState({ isPopupShown: isPopupShown });
-
-  render() {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <CardsForm
-          formRef={this.formRef}
-          addCard={this.addCard}
-          nameRef={this.name}
-          countRef={this.count}
-          dateRef={this.date}
-          shapeRef={this.shape}
-          shapes={this.shapes}
-          colorsRefs={this.colors}
-          sizesRefs={this.sizes}
-          imageRef={this.img}
-        />
-        {this.state.isPopupShown && (
-          <Popup>
-            <ConfirmationMessage onClick={this.hidePopup} />
-          </Popup>
-        )}
-        <CardsList data={this.state.cardList} />
-      </div>
-    );
-  }
-}
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <CardsForm
+        formRef={formRef}
+        addCard={addCard}
+        nameRef={nameRef}
+        countRef={countRef}
+        dateRef={dateRef}
+        shapeRef={shapeRef}
+        shapes={shapes}
+        colorsRefs={colorsRefs}
+        sizesRefs={sizesRefs}
+        imageRef={imageRef}
+      />
+      {isPopupShown && (
+        <Popup>
+          <ConfirmationMessage onClick={hidePopup} />
+        </Popup>
+      )}
+      <CardsList data={cardList} />
+    </div>
+  );
+};
 
 export default FormsPage;

@@ -24,15 +24,6 @@ export interface InputFieldProps {
   accept?: string;
 }
 
-export interface FormState {
-  errors: ValidationError[];
-}
-
-export interface FormPageState {
-  cardList: CardProps[];
-  isPopupShown: boolean;
-}
-
 export interface ValuesIdsRefs {
   id: string;
   value: string;
@@ -44,7 +35,7 @@ export interface ValuesIds {
   value: string;
 }
 
-export interface FormProps {
+export interface CardsFormProps {
   addCard: () => void;
   formRef: React.RefObject<HTMLFormElement>;
   nameRef: React.RefObject<HTMLInputElement>;
@@ -70,4 +61,18 @@ export interface ConfirmationMessageProps {
 
 export interface PopupProps {
   children: React.ReactNode | JSX.Element;
+}
+
+export interface SearchBarProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+export interface FormProps {
+  className: string;
+  formRef: React.RefObject<HTMLFormElement>;
+  children: React.ReactNode | JSX.Element;
+  onSubmitProp: () => void;
+  onError: (errors: ValidationError[]) => void;
+  validation: Validation[];
 }

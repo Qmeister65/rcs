@@ -1,36 +1,32 @@
 import React from 'react';
-import { Validation, ValidationError } from '@/types';
+import { FormProps, ValidationError } from '@/types';
 
-interface FormProps {
-  className: string;
-  formRef: React.RefObject<HTMLFormElement>;
-  children: React.ReactNode | JSX.Element;
-  onSubmit: () => void;
-  onError: (errors: ValidationError[]) => void;
-  validation: Validation[];
-}
-
-class Form extends React.Component<FormProps> {
-  onSubmit = (event: React.FormEvent) => {
+const Form: React.FC<FormProps> = ({
+  children,
+  className,
+  formRef,
+  onError,
+  onSubmitProp,
+  validation,
+}) => {
+  const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const errors = this.props.validation
+    const errors = validation
       .map((el) => el())
       .filter((el) => el !== undefined) as ValidationError[];
     if (errors.length) {
-      this.props.onError(errors);
+      onError(errors);
     } else {
-      this.props.onError([]);
-      this.props.onSubmit();
+      onError([]);
+      onSubmitProp();
     }
   };
 
-  render() {
-    return (
-      <form className={this.props.className} onSubmit={this.onSubmit} ref={this.props.formRef}>
-        {this.props.children}
-      </form>
-    );
-  }
-}
+  return (
+    <form className={className} onSubmit={onSubmit} ref={formRef}>
+      {children}
+    </form>
+  );
+};
 
 export default Form;
