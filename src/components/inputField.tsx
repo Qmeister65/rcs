@@ -11,6 +11,7 @@ const InputField: React.FC<InputFieldProps> = ({
   refProp,
   type,
   value,
+  name,
 }) => (
   <>
     <label className="inputField" htmlFor={id}>
@@ -19,7 +20,7 @@ const InputField: React.FC<InputFieldProps> = ({
         type={type}
         ref={refProp}
         value={value}
-        name={id}
+        name={name}
         className={inputStyle}
         accept={accept}
       />

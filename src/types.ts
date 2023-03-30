@@ -22,6 +22,7 @@ export interface InputFieldProps {
   refProp?: React.RefObject<HTMLInputElement>;
   inputStyle?: string;
   accept?: string;
+  name?: string;
 }
 
 export interface ValuesIdsRefs {

@@ -171,11 +171,12 @@ const CardsForm: React.FC<CardsFormProps> = ({
             {sizesRefs.map((el) => (
               <InputField
                 key={el.id}
-                id={'radioGroup'}
+                id={'radioGroup' + el.id}
                 label={el.value}
                 type="radio"
                 value={el.value}
                 refProp={el.ref}
+                name="radioGroup"
               />
             ))}
           </div>
