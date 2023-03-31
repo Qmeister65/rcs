@@ -1,141 +1,79 @@
-import React, { useState } from 'react';
-import { CardsFormProps, Validation, ValidationError } from '@/types';
+import React from 'react';
+import { CardsFormProps, FormInputProps } from '@/types';
 import InputField from '@/components/inputField';
 import Form from '@/components/form';
 import './cardsForm.scss';
+import { useForm } from 'react-hook-form';
+import { v4 as uuid } from 'uuid';
 
-const CardsForm: React.FC<CardsFormProps> = ({
-  addCard,
-  colorsRefs,
-  countRef,
-  dateRef,
-  formRef,
-  imageRef,
-  nameRef,
-  shapeRef,
-  shapes,
-  sizesRefs,
-}) => {
-  const [errors, setErrors] = useState<ValidationError[]>([]);
-  const errorsArr: Validation[] = [
-    () => {
-      return !!nameRef.current?.value
-        ? nameRef.current.value.length < 18
-          ? undefined
-          : {
-              id: 'name',
-              message: 'Name length should not be longer than 18 symbols',
-            }
-        : {
-            id: 'name',
-            message: 'Name should not be empty',
-          };
-    },
-    () => {
-      return !!countRef.current?.value
-        ? +countRef.current.value > 0
-          ? undefined
-          : +countRef.current.value === 0
-          ? {
-              id: 'count',
-              message: 'Quantity should not be zero',
-            }
-          : {
-              id: 'count',
-              message: 'Quantity should not be negative',
-            }
-        : {
-            id: 'count',
-            message: 'Quantity should not be empty',
-          };
-    },
-    () => {
-      return !!dateRef.current?.value
-        ? undefined
-        : {
-            id: 'date',
-            message: 'Date should be selected',
-          };
-    },
-    () => {
-      return shapeRef.current?.value !== ''
-        ? undefined
-        : {
-            id: 'shape',
-            message: 'Shape should be selected',
-          };
-    },
-    () => {
-      return colorsRefs.filter((el) => el.ref.current?.checked).length
-        ? undefined
-        : {
-            id: 'color',
-            message: 'At least one color should be checked',
-          };
-    },
-    () => {
-      return !!sizesRefs.filter((el) => el.ref.current?.checked === true)[0]
-        ? undefined
-        : {
-            id: 'size',
-            message: 'Size should be selected',
-          };
-    },
-    () => {
-      return !!imageRef.current?.value
-        ? undefined
-        : {
-            id: 'image',
-            message: 'Image should be uploaded',
-          };
-    },
-  ];
+const CardsForm: React.FC<CardsFormProps> = ({ addCard, colors, shapes, sizes }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<FormInputProps>();
 
-  const findError = (name: string) => {
-    const error = errors.filter((el) => el.id === name);
-    return error.length ? error[0].message : undefined;
-  };
-
-  const handleSubmit = () => {
-    addCard();
-  };
-
-  const onError = (errors: ValidationError[]) => {
-    setErrors(errors);
+  const submit = (data: FormInputProps) => {
+    const file = data.image ? data.image[0] : null;
+    addCard({
+      num: uuid(),
+      src: file ? URL.createObjectURL(file) : undefined,
+      name: data.name,
+      count: data.count.toString(),
+      year: data.date.slice(0, 4),
+      shape: data.shape,
+      color: data.color.join(', '),
+      size: data.size,
+    });
+    reset();
   };
 
   return (
     <>
-      <Form
-        className="cardsForm"
-        onError={onError}
-        onSubmitProp={handleSubmit}
-        validation={errorsArr}
-        formRef={formRef}
-      >
+      <Form className="cardsForm" onSubmit={handleSubmit(submit)}>
         <InputField
+          register={() =>
+            register('name', {
+              required: 'Name should not be empty',
+              maxLength: { value: 18, message: 'Name length should not be longer than 18 symbols' },
+            })
+          }
+          name="name"
           id="name"
           label="Название"
-          type="text"
-          refProp={nameRef}
-          error={findError('name')}
+          error={errors.name?.message}
         />
         <InputField
+          register={() =>
+            register('count', {
+              required: 'Quantity should not be empty',
+              min: {
+                value: 1,
+                message: 'Quantity should not be negative or zero',
+              },
+            })
+          }
+          name="count"
           id="count"
           label="Количество"
           type="number"
-          refProp={countRef}
-          error={findError('count')}
+          error={errors.count?.message}
         />
         <InputField
+          register={() => register('date', { required: 'Date should be selected' })}
           id="date"
           label="Год выпуска"
           type="date"
-          refProp={dateRef}
-          error={findError('date')}
+          name="date"
+          error={errors.date?.message}
         />
         <label className="cardsForm-field" htmlFor="shape">
-          <select id="shape" ref={shapeRef} defaultValue="">
+          <select
+            id="shape"
+            {...register('shape', { required: 'Shape should be selected' })}
+            defaultValue=""
+          >
             {shapes.map((el) => (
               <option
                 key={el.id}
@@ -149,46 +87,50 @@ const CardsForm: React.FC<CardsFormProps> = ({
           </select>
           Форма
         </label>
-        {findError('shape') && <span className="cardsForm__error">{findError('shape')}</span>}
+        {errors.shape?.message && <span className="cardsForm__error">{errors.shape.message}</span>}
         <label className="cardsForm-field">
           <div className="cardsForm-field__multiple">
-            {colorsRefs.map((el) => (
+            {colors.map((el) => (
               <InputField
+                register={() =>
+                  register('color', { required: 'At least one color should be checked' })
+                }
                 key={el.id}
+                name={'color'}
                 id={'color' + el.id}
                 label={el.value}
                 type="checkbox"
                 value={el.value}
-                refProp={el.ref}
               />
             ))}
           </div>
           Цвет
         </label>
-        {findError('color') && <span className="cardsForm__error">{findError('color')}</span>}
+        {errors.color?.message && <span className="cardsForm__error">{errors.color.message}</span>}
         <label className="cardsForm-field">
           <div className="cardsForm-field__multiple">
-            {sizesRefs.map((el) => (
+            {sizes.map((el) => (
               <InputField
+                register={() => register('size', { required: 'Size should be selected' })}
                 key={el.id}
                 id={'radioGroup' + el.id}
                 label={el.value}
                 type="radio"
                 value={el.value}
-                refProp={el.ref}
-                name="radioGroup"
+                name="size"
               />
             ))}
           </div>
           Размер
         </label>
-        {findError('size') && <span className="cardsForm__error">{findError('size')}</span>}
+        {errors.size?.message && <span className="cardsForm__error">{errors.size.message}</span>}
         <InputField
+          register={() => register('image', { required: 'Image should be uploaded' })}
+          name="image"
           id="img"
           label="Картинка для игрушки"
           type="file"
-          refProp={imageRef}
-          error={findError('image')}
+          error={errors.image?.message}
           accept="image/*"
         />
         <InputField id="submit" type="submit" value="Submit" inputStyle="cardsForm__btn" />

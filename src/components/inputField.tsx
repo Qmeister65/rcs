@@ -8,17 +8,17 @@ const InputField: React.FC<InputFieldProps> = ({
   id,
   inputStyle,
   label,
-  refProp,
   type,
   value,
   name,
+  register,
 }) => (
   <>
     <label className="inputField" htmlFor={id}>
       <input
-        id={id}
         type={type}
-        ref={refProp}
+        {...(register ? register() : {})}
+        id={id}
         value={value}
         name={name}
         className={inputStyle}
