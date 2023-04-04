@@ -43,6 +43,7 @@ export interface ConfirmationMessageProps {
 }
 
 export interface PopupProps {
+  onClick?: (event: Event) => void;
   children: React.ReactNode | JSX.Element;
 }
 
@@ -66,3 +67,19 @@ export interface FormInputProps {
   size: string;
   image: FileList;
 }
+
+export interface CardAPIProps {
+  birth: string;
+  death: string;
+  gender: string;
+  hair: string;
+  height: string;
+  name: string;
+  race: string;
+  realm: string;
+  spouse: string;
+  wikiUrl: string;
+  _id: string;
+}
+
+export type CardAPIListProps = { data: CardAPIProps[] };
