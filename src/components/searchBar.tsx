@@ -1,18 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './searchBar.scss';
 import { SearchBarProps } from '@/types';
 
 const SearchBar: React.FC<SearchBarProps> = (props) => {
+  const [query, setQuery] = useState<string>(localStorage.getItem('searchValue') || '');
+  const onClick = () => {
+    props.searchFunc(query);
+  };
   return (
-    <div className={'search-bar'}>
+    <div
+      className={'search-bar'}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter') props.searchFunc(query);
+      }}
+    >
       <input
         ref={props.inputRef}
-        onChange={(event) => props.onChange(event.target.value.toString())}
+        onChange={(event) => setQuery(event.target.value.toString())}
         placeholder={'SearchBar'}
-        value={props.value}
+        value={query}
         className={'search-bar__input'}
       />
-      <a className={'search-bar__icon'}></a>
+      <a className={'search-bar__icon'} onClick={onClick}></a>
     </div>
   );
 };

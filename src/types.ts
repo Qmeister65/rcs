@@ -48,9 +48,8 @@ export interface PopupProps {
 }
 
 export interface SearchBarProps {
-  value: string;
   inputRef: RefObject<HTMLInputElement>;
-  onChange: (value: string) => void;
+  searchFunc: (query: string) => void;
 }
 
 export interface FormProps {
@@ -81,4 +80,8 @@ export interface CardAPIProps {
   spouse: string;
   wikiUrl: string;
   _id: string;
+}
+
+export interface CardAPIListProps {
+  cards: CardAPIProps[];
 }
