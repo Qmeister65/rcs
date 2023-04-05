@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from 'react';
+import React, { MouseEventHandler, RefObject } from 'react';
 import { FieldValues } from 'react-hook-form';
 
 export interface CardProps {
@@ -49,6 +49,7 @@ export interface PopupProps {
 
 export interface SearchBarProps {
   value: string;
+  inputRef: RefObject<HTMLInputElement>;
   onChange: (value: string) => void;
 }
 

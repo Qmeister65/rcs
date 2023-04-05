@@ -6,6 +6,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
   return (
     <div className={'search-bar'}>
       <input
+        ref={props.inputRef}
         onChange={(event) => props.onChange(event.target.value.toString())}
         placeholder={'SearchBar'}
         value={props.value}
