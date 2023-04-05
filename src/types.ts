@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import { FieldValues } from 'react-hook-form';
 
 export interface CardProps {
@@ -43,7 +43,7 @@ export interface ConfirmationMessageProps {
 }
 
 export interface PopupProps {
-  onClick?: (event: Event) => void;
+  onClick?: MouseEventHandler<HTMLDivElement>;
   children: React.ReactNode | JSX.Element;
 }
 
@@ -81,5 +81,3 @@ export interface CardAPIProps {
   wikiUrl: string;
   _id: string;
 }
-
-export type CardAPIListProps = { data: CardAPIProps[] };
