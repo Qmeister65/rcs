@@ -2,26 +2,32 @@ import React from 'react';
 import { InputFieldProps } from '@/types';
 import './inputField.scss';
 
-class InputField extends React.Component<InputFieldProps> {
-  render() {
-    return (
-      <>
-        <label className="inputField" htmlFor={this.props.id}>
-          <input
-            id={this.props.id}
-            type={this.props.type}
-            ref={this.props.refProp}
-            value={this.props.value}
-            name={this.props.id}
-            className={this.props.inputStyle}
-            accept={this.props.accept}
-          />
-          {this.props.label}
-        </label>
-        {this.props.error && <span className="inputField__error">{this.props.error}</span>}
-      </>
-    );
-  }
-}
+const InputField: React.FC<InputFieldProps> = ({
+  accept,
+  error,
+  id,
+  inputStyle,
+  label,
+  type,
+  value,
+  name,
+  register,
+}) => (
+  <>
+    <label className="inputField" htmlFor={id}>
+      <input
+        type={type}
+        {...(register ? register() : {})}
+        id={id}
+        value={value}
+        name={name}
+        className={inputStyle}
+        accept={accept}
+      />
+      {label}
+    </label>
+    {error && <span className="inputField__error">{error}</span>}
+  </>
+);
 
 export default InputField;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { FieldValues } from 'react-hook-form';
 
 export interface CardProps {
   num: string;
@@ -14,29 +15,15 @@ export interface CardProps {
 export type CardListProps = { data: CardProps[] };
 
 export interface InputFieldProps {
-  id: string;
-  type: string;
+  id?: string;
+  register?: () => FieldValues;
+  type?: string;
   value?: string | number;
   label?: string;
   error?: string;
-  refProp?: React.RefObject<HTMLInputElement>;
   inputStyle?: string;
   accept?: string;
-}
-
-export interface FormState {
-  errors: ValidationError[];
-}
-
-export interface FormPageState {
-  cardList: CardProps[];
-  isPopupShown: boolean;
-}
-
-export interface ValuesIdsRefs {
-  id: string;
-  value: string;
-  ref: React.RefObject<HTMLInputElement>;
+  name?: string;
 }
 
 export interface ValuesIds {
@@ -44,25 +31,12 @@ export interface ValuesIds {
   value: string;
 }
 
-export interface FormProps {
-  addCard: () => void;
-  formRef: React.RefObject<HTMLFormElement>;
-  nameRef: React.RefObject<HTMLInputElement>;
-  countRef: React.RefObject<HTMLInputElement>;
-  dateRef: React.RefObject<HTMLInputElement>;
-  colorsRefs: ValuesIdsRefs[];
-  sizesRefs: ValuesIdsRefs[];
-  shapeRef: React.RefObject<HTMLSelectElement>;
+export interface CardsFormProps {
+  addCard: (card: CardProps) => void;
+  sizes: ValuesIds[];
+  colors: ValuesIds[];
   shapes: ValuesIds[];
-  imageRef: React.RefObject<HTMLInputElement>;
 }
-
-export interface ValidationError {
-  id: string;
-  message: string;
-}
-
-export type Validation = () => ValidationError | undefined;
 
 export interface ConfirmationMessageProps {
   onClick: () => void;
@@ -70,4 +44,25 @@ export interface ConfirmationMessageProps {
 
 export interface PopupProps {
   children: React.ReactNode | JSX.Element;
+}
+
+export interface SearchBarProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+export interface FormProps {
+  className: string;
+  children: React.ReactNode | JSX.Element;
+  onSubmit: () => void;
+}
+
+export interface FormInputProps {
+  name: string;
+  count: number;
+  date: string;
+  shape: string;
+  color: string[];
+  size: string;
+  image: FileList;
 }
