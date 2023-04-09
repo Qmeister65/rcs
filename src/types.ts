@@ -48,8 +48,8 @@ export interface PopupProps {
 }
 
 export interface SearchBarProps {
-  inputRef: RefObject<HTMLInputElement>;
-  searchFunc: (query: string) => void;
+  inputRef?: RefObject<HTMLInputElement>;
+  searchFunc?: (query: string) => void;
 }
 
 export interface FormProps {

@@ -29,9 +29,8 @@ const MainPage: React.FC = () => {
         setCards(r.data.docs);
         setIsLoading(false);
       })
-      .catch((e) => {
+      .catch(() => {
         setIsLoading(true);
-        console.log(e);
       });
   };
   return (

@@ -3,7 +3,7 @@ import '@/components/loader.scss';
 
 const Loader: React.FC = () => {
   return (
-    <div>
+    <div data-testid={'loader'}>
       <span>Loading</span>
       <span className="l-1"></span>
       <span className="l-2"></span>
