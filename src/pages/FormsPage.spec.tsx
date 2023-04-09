@@ -11,5 +11,8 @@ describe('Forms page', () => {
   it('Render errors in form', async () => {
     render(<FormsPage />);
     fireEvent(screen.getByText(/submit/i), new MouseEvent('click'));
+    await waitFor(() => {
+      expect(screen.getByText(/name should not be empty/i)).toBeInTheDocument();
+    });
   });
 });
