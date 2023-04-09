@@ -12,13 +12,13 @@ const MainPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const ref = { ...inputRef };
-    setIsLoading(true);
     search(localStorage.getItem('searchValue') || '');
     return () => {
       localStorage.setItem('searchValue', ref.current?.value || '');
     };
   }, []);
   const search = (value: string) => {
+    setIsLoading(true);
     axios
       .get(`https://the-one-api.dev/v2/character?name=/${value}/i`, {
         headers: {
