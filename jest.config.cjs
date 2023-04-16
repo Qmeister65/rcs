@@ -11,4 +11,5 @@ module.exports = {
   collectCoverageFrom: ['**/*.tsx', '!**/node_modules/**', '!**/vendor/**'],
   modulePaths: ['./src'],
   verbose: true,
+  setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts']
 };

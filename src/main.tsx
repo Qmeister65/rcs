@@ -7,7 +7,11 @@ import AboutPage from '@/pages/AboutPage';
 import NotFoundPage from '@/pages/NotFoundPage';
 import FormsPage from '@/pages/FormsPage';
 import { Provider } from 'react-redux';
-import { store } from '@/store';
+import { setupStore } from '@/store';
+import { setupListeners } from '@reduxjs/toolkit/query';
+
+const store = setupStore();
+setupListeners(store.dispatch);
 
 const router = createBrowserRouter([
   {

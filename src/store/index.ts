@@ -1,19 +1,20 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore, PreloadedState } from '@reduxjs/toolkit';
 import formReducer from '@/store/formReducer';
 import mainReducer from '@/store/mainReducer';
 import { service } from '@/service';
-import { setupListeners } from '@reduxjs/toolkit/query';
 
-export const store = configureStore({
-  reducer: {
-    formReducer,
-    mainReducer,
-    [service.reducerPath]: service.reducer,
-  },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(service.middleware),
+const rootReducer = combineReducers({
+  formReducer,
+  mainReducer,
+  [service.reducerPath]: service.reducer,
 });
+export const setupStore = (preloadedState?: PreloadedState<RootState>) =>
+  configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(service.middleware),
+    preloadedState,
+  });
 
-setupListeners(store.dispatch);
-
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppStore = ReturnType<typeof setupStore>;
+export type AppDispatch = AppStore['dispatch'];

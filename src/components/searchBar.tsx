@@ -19,6 +19,7 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
         placeholder={'SearchBar'}
         value={query}
         className={'search-bar__input'}
+        data-testid={'search-bar__input'}
       />
       <a className={'search-bar__icon'} onClick={onClick} data-testid={'btn'}></a>
     </div>
