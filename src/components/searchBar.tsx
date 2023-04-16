@@ -3,7 +3,7 @@ import './searchBar.scss';
 import { SearchBarProps } from '@/types';
 
 const SearchBar: React.FC<SearchBarProps> = (props) => {
-  const [query, setQuery] = useState<string>(localStorage.getItem('searchValue') || '');
+  const [query, setQuery] = useState<string>(props.query || '');
   const onClick = () => {
     props.searchFunc?.(query);
   };
@@ -15,7 +15,6 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       }}
     >
       <input
-        ref={props.inputRef}
         onChange={(event) => setQuery(event.target.value.toString())}
         placeholder={'SearchBar'}
         value={query}
