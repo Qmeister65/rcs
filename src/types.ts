@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEventHandler, RefObject } from 'react';
 import { FieldValues } from 'react-hook-form';
 
 export interface CardProps {
@@ -43,12 +43,13 @@ export interface ConfirmationMessageProps {
 }
 
 export interface PopupProps {
+  onClick?: MouseEventHandler<HTMLDivElement>;
   children: React.ReactNode | JSX.Element;
 }
 
 export interface SearchBarProps {
-  value: string;
-  onChange: (value: string) => void;
+  inputRef?: RefObject<HTMLInputElement>;
+  searchFunc?: (query: string) => void;
 }
 
 export interface FormProps {
@@ -65,4 +66,22 @@ export interface FormInputProps {
   color: string[];
   size: string;
   image: FileList;
+}
+
+export interface CardAPIProps {
+  birth: string;
+  death: string;
+  gender: string;
+  hair: string;
+  height: string;
+  name: string;
+  race: string;
+  realm: string;
+  spouse: string;
+  wikiUrl: string;
+  _id: string;
+}
+
+export interface CardAPIListProps {
+  cards: CardAPIProps[];
 }

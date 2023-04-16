@@ -1,20 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import SearchBar from '@/components/searchBar';
-import CardsList from '@/components/cardsList';
-import data from '@/assets/data.json';
+import CardAPIList from '@/components/cardAPIList';
 import '@/main.scss';
+import axios from 'axios';
+import { CardAPIProps } from '@/types';
+import Loader from '@/components/loader';
 
 const MainPage: React.FC = () => {
-  const [value, setValue] = useState(localStorage.getItem('searchValue') || '');
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [cards, setCards] = useState<CardAPIProps[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
+    const ref = { ...inputRef };
+    search(localStorage.getItem('searchValue') || '');
     return () => {
-      localStorage.setItem('searchValue', value);
+      localStorage.setItem('searchValue', ref.current?.value || '');
     };
-  });
+  }, []);
+  const search = (value: string) => {
+    setIsLoading(true);
+    axios
+      .get(`https://the-one-api.dev/v2/character?name=/${value}/i`, {
+        headers: {
+          Authorization: 'Bearer wVHj2Pv5am7yP3fvyAvm',
+        },
+      })
+      .then((r) => {
+        setCards(r.data.docs);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setIsLoading(true);
+      });
+  };
   return (
     <div className={'app'}>
-      <SearchBar value={value} onChange={(value) => setValue(value)} />
-      <CardsList data={data} />
+      <SearchBar searchFunc={search} inputRef={inputRef} />
+      {isLoading ? <Loader /> : <CardAPIList cards={cards} />}
     </div>
   );
 };
