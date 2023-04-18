@@ -2,10 +2,12 @@ import { combineReducers, configureStore, PreloadedState } from '@reduxjs/toolki
 import formReducer from '@/store/formReducer';
 import mainReducer from '@/store/mainReducer';
 import { service } from '@/service';
+import searchBarReducer from '@/store/searchBarReducer';
 
 const rootReducer = combineReducers({
   formReducer,
   mainReducer,
+  searchBarReducer,
   [service.reducerPath]: service.reducer,
 });
 export const setupStore = (preloadedState?: PreloadedState<RootState>) =>
