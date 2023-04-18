@@ -1,42 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import SearchBar from '@/components/searchBar';
 import CardAPIList from '@/components/cardAPIList';
 import '@/main.scss';
-import axios from 'axios';
-import { CardAPIProps } from '@/types';
 import Loader from '@/components/loader';
+import { useActions, useAppSelector } from '@/hooks/hooks';
+import { selectQuery } from '@/store/mainReducer';
+import { useFetchCardsQuery } from '@/service';
 
 const MainPage: React.FC = () => {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [cards, setCards] = useState<CardAPIProps[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  useEffect(() => {
-    const ref = { ...inputRef };
-    search(localStorage.getItem('searchValue') || '');
-    return () => {
-      localStorage.setItem('searchValue', ref.current?.value || '');
-    };
-  }, []);
-  const search = (value: string) => {
-    setIsLoading(true);
-    axios
-      .get(`https://the-one-api.dev/v2/character?name=/${value}/i`, {
-        headers: {
-          Authorization: 'Bearer wVHj2Pv5am7yP3fvyAvm',
-        },
-      })
-      .then((r) => {
-        setCards(r.data.docs);
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setIsLoading(true);
-      });
-  };
+  const query = useAppSelector(selectQuery);
+  const { setQuery } = useActions();
+  const { data, isFetching } = useFetchCardsQuery(query);
+  const cards = data || [];
   return (
     <div className={'app'}>
-      <SearchBar searchFunc={search} inputRef={inputRef} />
-      {isLoading ? <Loader /> : <CardAPIList cards={cards} />}
+      <SearchBar searchFunc={setQuery} query={query} />
+      {isFetching ? <Loader /> : <CardAPIList cards={cards} />}
     </div>
   );
 };

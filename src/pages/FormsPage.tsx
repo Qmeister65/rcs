@@ -5,6 +5,8 @@ import ConfirmationMessage from '@/components/confirmationMessage';
 import CardsList from '@/components/cardsList';
 import { v4 as uuid } from 'uuid';
 import { CardProps } from '@/types';
+import { useActions, useAppSelector } from '@/hooks/hooks';
+import { selectFormCards } from '@/store/formReducer';
 
 const FormsPage: React.FC = () => {
   const colorValues: string[] = ['белый', 'зеленый', 'красный', 'желтый', 'синий'];
@@ -28,11 +30,12 @@ const FormsPage: React.FC = () => {
       value: el,
     };
   });
-  const [cardList, setCardList] = useState<CardProps[]>([]);
+  const cardList = useAppSelector(selectFormCards);
+  const { addFormCard } = useActions();
   const [isPopupShown, setIsPopupShown] = useState(false);
   const addCard = (card: CardProps) => {
     invertPopup(true);
-    setCardList([...cardList, card]);
+    addFormCard(card);
   };
   const invertPopup = (isPopupShown: boolean): void => setIsPopupShown(isPopupShown);
   const hidePopup = () => invertPopup(false);

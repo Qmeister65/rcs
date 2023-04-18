@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import './searchBar.scss';
 import { SearchBarProps } from '@/types';
+import { useActions, useAppSelector } from '@/hooks/hooks';
+import { selectValue } from '@/store/searchBarReducer';
 
 const SearchBar: React.FC<SearchBarProps> = (props) => {
-  const [query, setQuery] = useState<string>(localStorage.getItem('searchValue') || '');
+  const value = useAppSelector(selectValue);
+  const { setValue } = useActions();
+  const [query, setQuery] = useState<string>(value || '');
   const onClick = () => {
     props.searchFunc?.(query);
   };
@@ -15,11 +19,14 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
       }}
     >
       <input
-        ref={props.inputRef}
-        onChange={(event) => setQuery(event.target.value.toString())}
+        onChange={(event) => {
+          setQuery(event.target.value.toString());
+          setValue(event.target.value.toString());
+        }}
         placeholder={'SearchBar'}
         value={query}
         className={'search-bar__input'}
+        data-testid={'search-bar__input'}
       />
       <a className={'search-bar__icon'} onClick={onClick} data-testid={'btn'}></a>
     </div>

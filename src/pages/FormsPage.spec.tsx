@@ -1,15 +1,16 @@
 import '@testing-library/jest-dom';
 import React from 'react';
 import FormsPage from '@/pages/FormsPage';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { renderWithProviders } from '@/utils/test-utils';
 
 describe('Forms page', () => {
   it('Render Forms page', () => {
-    render(<FormsPage />);
+    renderWithProviders(<FormsPage />);
     expect(screen.getByText(/название/i)).toBeInTheDocument();
   });
   it('Render errors in form', async () => {
-    render(<FormsPage />);
+    renderWithProviders(<FormsPage />);
     fireEvent(screen.getByText(/submit/i), new MouseEvent('click'));
     await waitFor(() => {
       expect(screen.getByText(/name should not be empty/i)).toBeInTheDocument();
